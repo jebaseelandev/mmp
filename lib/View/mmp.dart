@@ -20,7 +20,7 @@ class _MMPState extends State<MMP> {
     getData();
   }
 
-  getData() async {
+  Future<void> getData() async {
     posts = await RomoteService().getposts();
     if (posts != null) {
       setState(() {
@@ -42,7 +42,9 @@ class _MMPState extends State<MMP> {
           itemCount: posts?.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
-              child: Text('$index $isLoaed'),
+              child: Row(
+                children: [Text('$index'), Text('$isLoaed')],
+              ),
             );
           },
         ),
