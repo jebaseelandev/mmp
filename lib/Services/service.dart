@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 Post postFromJson(String str) => Post.fromJson(json.decode(str));
+Datum datumFromJson(String str) => Datum.fromJson(json.decode(str));
 
 String postToJson(Post data) => json.encode(data.toJson());
 

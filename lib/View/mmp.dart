@@ -3,6 +3,7 @@ import 'package:dmp/Methods/post.dart';
 import 'package:dmp/Services/service.dart';
 import 'package:dmp/class/themeData.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class MMP extends StatefulWidget {
   MMP({Key? key}) : super(key: key);
@@ -12,7 +13,10 @@ class MMP extends StatefulWidget {
 }
 
 class _MMPState extends State<MMP> {
-  List<Post>? posts;
+  List<Post> posts = [];
+  List<Post> lstposts = [];
+  List<Datum> lstDatum = [];
+  late Post objPosts;
   var isLoaed = false;
   @override
   void initState() {
@@ -21,10 +25,14 @@ class _MMPState extends State<MMP> {
   }
 
   Future<void> getData() async {
-    posts = await RomoteService().getposts();
-    if (posts != null) {
+    objPosts = (await RomoteService().getPost());
+    //method 1:
+
+
+    if (lstDatum != null) {
       setState(() {
         isLoaed = true;
+        lstDatum = objPosts.data;
       });
     }
   }
@@ -39,11 +47,23 @@ class _MMPState extends State<MMP> {
           ),
         ),
         body: ListView.builder(
-          itemCount: posts?.length,
+          itemCount: lstDatum.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
-              child: Row(
-                children: [Text('$index'), Text('$isLoaed')],
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      // Text('${posts?[index].data.asMap()}'),
+                      ListTile(
+                        title: Text('${lstDatum[index].vegetableName}'),
+                        subtitle: Text('${lstDatum[index].retailPrice}'),
+                        leading: Text('${lstDatum[index].shopingMallPrice}'),
+                        trailing: Text('${lstDatum[index].id}'),
+                      ),
+                    ],
+                  )
+                ],
               ),
             );
           },
